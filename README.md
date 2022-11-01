@@ -1,2 +1,2 @@
-# ALM
+# ALU
 Arithmetic Logic Unit
