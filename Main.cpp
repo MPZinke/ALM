@@ -1,20 +1,26 @@
 
 
+#include <iostream>
+
+
 #include "Adder.hpp"
-#include "Bus.hpp"
+#include "Port.hpp"
+#include "Register.hpp"
 
 
 int main()
 {
-	Bus<8> bus1(true, true, true, true, true, true, true, true);
-	Bus<8> bus2(false, false, false, false, false, false, false, false);
+	Register register1(0, 0, 0, 0, 0, 0, 1, 0), register2(0, 0, 0, 0, 0, 1, 1, 0);
+	Adder adder;
 
-	Adder<8> adder;
-	bus1 >> adder;
-	bus2 >> adder;
+	std::cout <<register1;
+	std::cout <<register2;
 
-	Bus<8> result;
-	adder >> result;
+	register1 >> adder[1];
+	register2 >> adder[2];
+
+	std::cout << adder;
+
 
 	return 0;
 }

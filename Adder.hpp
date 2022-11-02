@@ -1,42 +1,28 @@
 
 
-#include "Bus.hpp"
+#pragma once
 
 
-template<size_t N>
+#include <iostream>
+
+
+#include "Port.hpp"
+
+
 class Adder
 {
 	public:
 		Adder(){}
 
+		Port<8> operator[](int index) const;  // Getter
+		Port<8>& operator[](int index);  // Setter
 
-		friend void operator>>(Bus<N>& bus, Adder& adder)
-		{
-			if(adder._bus1 == NULL || adder._bus2 != NULL)
-			{
-				adder._bus2 = NULL;
-				adder._bus1 = &bus;
-			}
-			else
-			{
-				adder._bus2 = &bus;
-			}
-		}
+		void add();
 
-
-		void operator>>(Bus<N>& bus)
-		{
-			bit carry = false;
-			for(unsigned int x = 0; x < N; x++)
-			{
-				bit bus_1_2_xor = (*_bus1)[x] ^ (*_bus2)[x];
-				bus[x] = bus_1_2_xor ^ carry;
-				carry = (bus_1_2_xor and carry) or ((*_bus1)[x] and (*_bus2)[x]);
-			}
-		}
-
+		friend std::ostream& operator<<(std::ostream& stream, Adder& adder);
 
 	private:
-		Bus<N>* _bus1 = NULL;
-		Bus<N>* _bus2 = NULL;
+		Port<8> operand1;
+		Port<8> operand2;
+		Port<8> result;
 };

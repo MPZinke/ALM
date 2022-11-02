@@ -1,4 +1,4 @@
 
 
 all:
-	g++ -std=c++17 Main.cpp Bus.cpp -o Circuitry
+	g++ -std=c++17 *.cpp -o Circuitry
