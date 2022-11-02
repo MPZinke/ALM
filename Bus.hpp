@@ -1,11 +1,15 @@
 
 
+#pragma once
+
+
 #include <array>
+#include <iostream>
 #include <tuple>
 #include <type_traits> // enable_if, conjuction
 
 
-#pragma once
+#define BUS_WIDTH 8
 
 
 enum Endian
@@ -17,57 +21,34 @@ enum Endian
 
 typedef bool bit;
 
-// template<class Head, class... Tail, class = std::enable_if_t<are_same<Head, Tail...>::value, void>>
-// void print_same_type(Head head, Tail... tail)
 
-// template<unsigned int N, Endian=LITTLE>
+class Adder;
+class Register;
 
-template<size_t N>
+
 class Bus
 {
 	private:
-		unsigned int _read_index = 0;
-		unsigned int _write_index = 0;
-		bit _bits[N];
+		bool a = 0;
+		bool b = 0;
+		bool c = 0;
+		bool d = 0;
+		bool e = 0;
+		bool f = 0;
+		bool g = 0;
+		bool h = 0;
+
 
 	public:
-		Bus()
-		{
-			std::fill(_bits, _bits + N, false);
-		}
+		Bus();
 
+		friend std::ostream& operator<<(std::ostream& stream, Bus& bus);
 
-		// FROM: https://stackoverflow.com/a/36132879
-		template<typename... Args, typename std::enable_if<sizeof...(Args) == N, bit>::type = 0>
-		Bus(Args... args)
-		: _bits{args...}
-		{}
-
-
-		bit operator[](int index) const;
-		bit& operator[](int index);
+		void operator>>(Bus& bus);
+		friend void operator>(Bus& bus, Adder& adder);
+		friend void operator>>(Bus& bus, Adder& adder);
+		friend void operator<<(Bus& bus, Adder& adder);
+		friend Bus& operator>(Register& register_x, Bus& bus);
+		friend Bus& operator>>(Register& register_x, Bus& bus);
+		// friend void operator>>(Bus& bus1, Bus& bus2);
 };
-
-
-template<size_t N>
-bit Bus<N>::operator[](int index) const
-{
-	if(index >= N)
-	{
-		throw std::out_of_range("Index out of range");
-	}
-
-	return _bits[index];
-}
-
-
-template<size_t N>
-bit& Bus<N>::operator[](int index)
-{
-	if(index >= N)
-	{
-		throw std::out_of_range("Index out of range");
-	}
-
-	return _bits[index];
-}
