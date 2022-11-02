@@ -44,13 +44,30 @@ class Bus
 		{}
 
 
-		bit operator[](unsigned int index)
-		{
-			if(index >= N)
-			{
-				throw std::out_of_range("Index out of range");
-			}
-
-			return _bits[index];
-		}
+		bit operator[](int index) const;
+		bit& operator[](int index);
 };
+
+
+template<size_t N>
+bit Bus<N>::operator[](int index) const
+{
+	if(index >= N)
+	{
+		throw std::out_of_range("Index out of range");
+	}
+
+	return _bits[index];
+}
+
+
+template<size_t N>
+bit& Bus<N>::operator[](int index)
+{
+	if(index >= N)
+	{
+		throw std::out_of_range("Index out of range");
+	}
+
+	return _bits[index];
+}

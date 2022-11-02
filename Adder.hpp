@@ -29,9 +29,9 @@ class Adder
 			bit carry = false;
 			for(unsigned int x = 0; x < N; x++)
 			{
-				bit bus_1_2_xor = _bus1[x] ^ _bus2[x];
-				bus._bits[x] = bus_1_2_xor ^ carry;
-				carry = (bus_1_2_xor and carry) or (_bus1[x] and _bus2[x]);
+				bit bus_1_2_xor = (*_bus1)[x] ^ (*_bus2)[x];
+				bus[x] = bus_1_2_xor ^ carry;
+				carry = (bus_1_2_xor and carry) or ((*_bus1)[x] and (*_bus2)[x]);
 			}
 		}
 
