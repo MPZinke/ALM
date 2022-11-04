@@ -9,10 +9,13 @@
 #include "Port.hpp"
 
 
+class ALU;
+
+
 class Adder
 {
 	public:
-		Adder(){}
+		Adder(ALU& alu);
 
 		Port<8> operator[](int index) const;  // Getter
 		Port<8>& operator[](int index);  // Setter
@@ -22,6 +25,8 @@ class Adder
 		friend std::ostream& operator<<(std::ostream& stream, Adder& adder);
 
 	private:
+		ALU _alu;
+
 		Port<8> operand1;
 		Port<8> operand2;
 		Port<8> result;

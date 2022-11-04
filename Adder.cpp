@@ -3,6 +3,11 @@
 #include "Adder.hpp"
 
 
+Adder::Adder(ALU& alu)
+: _alu{alu}
+{}
+
+
 Port<8> Adder::operator[](int index) const
 {
 	if(index > 2)
