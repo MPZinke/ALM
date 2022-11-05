@@ -11,42 +11,20 @@
 ***********************************************************************************************************************/
 
 
-#pragma once
+#include "ALU.hpp"
 
 
-#include "Port.hpp"
-#include "Adder.hpp"
-
-
-enum Flags  // The bit numbers of the flags
+ALU::ALU()
+: _adder{*this}
 {
-	CARRY,
-	NEGATIVE,
-	ZERO,
-	OVERFLOW
-};
+	// _instructions = {this->_add};
+}
 
 
-class ALU
+void ALU::_add()
 {
-	public:
-		ALU();
-
-		Port<8> operator[](int index) const;  // Getter
-		Port<8>& operator[](int index);  // Setter
-
-	private:
-		Port<8> _operand1;
-		Port<8> _operand2;
-		Port<8> _result;
-
-		Port<4> _flags;
-		Port<4> _instruction;
-
-		void (ALU::*_instructions[1])() = {&ALU::_add};
-
-		Adder _adder;
-
-
-		void _add();
-};
+	_flags[CARRY] >> _adder.carry_in();
+	_operand1 >> _adder[0];
+	_operand2 >> _adder[1];
+	_result << _adder;
+}

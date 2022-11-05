@@ -34,17 +34,21 @@ class Port
 			std::fill(_bits, _bits + N, false);
 		}
 
+
+		void operator>>(Port<N>& port)
+		{
+			for(int x = 0; x < N; x++)
+			{
+				port._bits[x] = this->_bits[x];
+			}
+		}
+
+
 		friend void operator>>(Register &register_x, Port<8>& port);
+		friend bit operator>>(bit left, Port<1>& port);
+		friend bit operator^(bit left, Port<1>& port);
 
 
-		bit& operator[](int index)
-		{
-			return _bits[index];
-		}
-
-
-		const bit& operator[](int index) const
-		{
-			return _bits[index];
-		}
+		const bit& operator[](int index) const;  // Getter
+		bit& operator[](int index);  // Setter
 };
