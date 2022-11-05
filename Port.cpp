@@ -24,15 +24,3 @@ bit operator^(bit left, Port<1>& port)
 {
 	return left ^ port._bits[0];
 }
-
-
-bit& operator[](int index)
-{
-	return _bits[index];
-}
-
-
-bit operator[](int index) const
-{
-	return _bits[index];
-}

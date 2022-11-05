@@ -9,17 +9,19 @@
 
 int main()
 {
-	Register register1(0, 0, 0, 0, 0, 0, 1, 0), register2(0, 0, 0, 0, 0, 1, 1, 0);
-	// Adder adder;
+	Register register1(0, 0, 0, 0, 0, 0, 1, 0), register2(0, 0, 0, 0, 0, 1, 1, 0), instruction(0);
+	Port<4> temp_instruction;
+	ALU alu;
 
 	std::cout << register1;
 	std::cout << register2;
 
-	// register1 >> adder[0];
-	// register2 >> adder[1];
+	register1 >> alu[OPERAND1];
+	register2 >> alu[OPERAND2];
 
-	// std::cout << adder;
+	register1 << alu;
 
+	std::cout << register1;
 
 	return 0;
 }

@@ -1,6 +1,7 @@
 
 
 #include "Adder.hpp"
+#include "ALU.hpp"
 
 
 Adder::Adder(ALU& alu)
@@ -10,44 +11,42 @@ Adder::Adder(ALU& alu)
 
 Port<8> Adder::operator[](int index) const
 {
-	switch(index)
+	if(index == OPERAND1)
 	{
-		case 1:
-		{
-			return _operand1;
-		}
-		case 2:
-		{
-			return _operand2;
-		}
+		return _operand1;
+	}
+	if(index == OPERAND2)
+	{
+		return _operand2;
 	}
 
-	throw std::out_of_range("Index out of range.");
+	std::string message("In `Port<8> Adder::operator[](int index) const`\n"
+	  "\tIndex " + std::to_string(index) + " out of range");
+	throw std::out_of_range(message);
 }
 
 
 Port<8>& Adder::operator[](int index)
 {
-	switch(index)
+	if(index == OPERAND1)
 	{
-		case 1:
-		{
-			return _operand1;
-		}
-		case 2:
-		{
-			return _operand2;
-		}
+		return _operand1;
+	}
+	if(index == OPERAND2)
+	{
+		return _operand2;
 	}
 
-	throw std::out_of_range("Index out of range.");
+	std::string message("In `Port<8>& Adder::operator[](int index)`\n"
+	  "\tIndex " + std::to_string(index) + " out of range");
+	throw std::out_of_range(message);
 }
 
 
-void Adder::add()
+void Adder::_add()
 {
 	bool h_xor = _operand1[7] ^ _operand2[7];
-	_result[7] = h_xor ^ _carry;
+	_result[7] = h_xor ^ _carry_in;
 	bool g_carry = _operand1[7] && _operand2[7];
 
 	bool g_xor = _operand1[6] ^ _operand2[6];
@@ -80,11 +79,17 @@ void Adder::add()
 }
 
 
+Port<1>& Adder::carry_in()
+{
+	return _carry_in;
+}
+
+
 // ————————————————————————————————————————————————————— FRIEND ————————————————————————————————————————————————————— //
 
 std::ostream& operator<<(std::ostream& stream, Adder& adder)
 {
-	adder.add();
+	adder._add();
 
 	stream << adder._operand1[0] << " " << adder._operand1[1] << " " << adder._operand1[2] << " "
 		   << adder._operand1[3] << " " << adder._operand1[4] << " " << adder._operand1[5] << " "
@@ -98,4 +103,12 @@ std::ostream& operator<<(std::ostream& stream, Adder& adder)
 		   << adder._result[7] << std::endl;
 
 	return stream;
+}
+
+
+void operator<<(Port<8>& port, Adder& adder)
+{
+	adder._add();
+
+	port << adder._result;
 }

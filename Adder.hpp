@@ -27,10 +27,10 @@ class Adder
 	private:
 		ALU& _alu;
 
-		Port<1> _carry;
+		Port<1> _carry_in;
 		Port<8> _operand1;
 		Port<8> _operand2;
 		Port<8> _result;
 
-		void add();
+		void _add();
 };

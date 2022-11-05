@@ -7,6 +7,7 @@
 
 
 #include "Port.hpp"
+#include "ALU.hpp"
 
 
 class Register
@@ -18,6 +19,7 @@ class Register
 
 
 		friend void operator>>(Register& register_x, Port<8>& port);
+		friend void operator<<(Register& register_x, ALU& alu);
 		friend std::ostream& operator<<(std::ostream& stream, Register& register_x);
 
 
