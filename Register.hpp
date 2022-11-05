@@ -19,6 +19,7 @@ class Register
 
 
 		friend void operator>>(Register& register_x, Port<8>& port);
+		friend void operator>>(Register& register_x, Port<4>& port);  //TEMP
 		friend void operator<<(Register& register_x, ALU& alu);
 		friend std::ostream& operator<<(std::ostream& stream, Register& register_x);
 

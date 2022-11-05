@@ -87,6 +87,12 @@ std::ostream& operator<<(std::ostream& stream, ALU& alu)
 }
 
 
+void operator>>(Port<4>& port, ALU& alu)
+{
+	port >> alu._instruction;
+}
+
+
 void operator<<(Port<8>& port, ALU& alu)
 {
 	alu._decode();

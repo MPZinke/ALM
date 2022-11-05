@@ -48,6 +48,12 @@ void operator>>(Register& register_x, Port<8>& port)
 }
 
 
+void operator>>(Register& register_x, Port<4>& port)
+{
+	register_x._port >> port;
+}
+
+
 void operator<<(Register& register_x, ALU& alu)
 {
 	register_x._port << alu;
