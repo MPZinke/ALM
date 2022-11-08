@@ -32,6 +32,10 @@ class Port
 			std::fill(_bits, _bits + N, false);
 		}
 
+		// Getters/Setters
+		bit operator[](int index) const;  // Getter
+		bit& operator[](int index);  // Setter
+
 		// Logical
 		bool operator==(int right);
 		friend bool operator==(int right, Port<N>& port);
@@ -40,19 +44,15 @@ class Port
 		template<size_t M>
 		friend bit operator^(bit left, Port<M>& port);
 
-		// Getters/Setters
-		bit operator[](int index) const;  // Getter
-		bit& operator[](int index);  // Setter
-
 		// Data Flow
 		// Convert ports of different size
 		template<size_t M, size_t P>
-		friend void operator>>(Port<M> left, Port<P>& right);
+		friend Port<P>& operator>>(Port<M>& left, Port<P>& right);
 
-		friend void operator>>(Register &register_x, Port<8>& port);
+		friend void operator>>(Register &register_x, Port<16>& port);
 		friend void operator>>(Register &register_x, Port<4>& port);  // TEMP
 		template<size_t M>
-		friend void operator>>(bit left, Port<M>& port);
+		friend Port<M>& operator>>(bit left, Port<M>& port);
 		void operator<<(Port<N>& right);
 
 		// Printing
@@ -69,7 +69,7 @@ bit& Port<N>::operator[](int index)
 	if(N <= index)
 	{
 		std::string message("In `bit& Port<N>::operator[](int index)`\n"
-		  "\tIndex " + std::to_string(index) + " out of range");
+		  "\tIndex " + std::to_string(index) + " is out of range");
 
 		throw std::out_of_range(message);
 	}
@@ -84,7 +84,7 @@ bit Port<N>::operator[](int index) const
 	if(N <= index)
 	{
 		std::string message("In `bit Port<N>::operator[](int index) const`\n"
-		  "\tIndex " + std::to_string(index) + " out of range");
+		  "\tIndex " + std::to_string(index) + " is out of range");
 		throw std::out_of_range(message);
 	}
 
@@ -97,7 +97,18 @@ bit Port<N>::operator[](int index) const
 template<size_t N>
 bool Port<N>::operator==(int right)
 {
+	std::cout << *this << "|" << right << std::endl;
+	for(int n = N; n > 0; n--)
+	{
+		std::cout << "\t" << _bits[n-1] << "==" << ((1 << (N-n)) & right) << std::endl;
+		if(_bits[n-1] != ((right >> (N-n)) & 1))
+		// if(_bits[x] != ((1 << x) & 1))
+		{
+			return false;
+		}
+	}
 
+	return true;
 }
 
 template<size_t N>
@@ -124,20 +135,22 @@ bit Port<N>::operator^(bit right)
 // ——————————————————————————————————————————————————— DATA  FLOW ——————————————————————————————————————————————————— //
 
 template<size_t N, size_t M>
-void operator>>(Port<N> left, Port<M>& right)
+Port<M>& operator>>(Port<N>& left, Port<M>& right)
 {
 	static_assert(N > 0 && M > 0);
 	for(int x = 0; x < (int)(N < M ? N : M); x++)
 	{
 		right._bits[(M - 1) - x] = left._bits[(N - 1) - x];
 	}
+	return right;
 }
 
 
 template<size_t N>
-void operator>>(bit left, Port<N>& right)
+Port<N>& operator>>(bit left, Port<N>& right)
 {
 	right._bits[N-1] = left;
+	return right;
 }
 
 

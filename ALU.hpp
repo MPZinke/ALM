@@ -16,6 +16,7 @@
 
 #include "Port.hpp"
 #include "Adder.hpp"
+#include "Not.hpp"
 
 
 enum Flags  // The bit numbers of the flags
@@ -58,11 +59,11 @@ class ALU
 	public:
 		ALU();
 
-		Port<8> operator[](int index) const;  // Getter
-		Port<8>& operator[](int index);  // Setter
+		Port<16> operator[](int index) const;  // Getter
+		Port<16>& operator[](int index);  // Setter
 
 		friend void operator>>(Port<4>& port, ALU& alu);
-		friend void operator<<(Port<8>& port, ALU& alu);
+		friend void operator<<(Port<16>& port, ALU& alu);
 		friend void operator<<(Register& register_x, ALU& alu);
 
 		// Printing
@@ -70,9 +71,9 @@ class ALU
 
 	private:
 		// IO
-		Port<8> _operand1;
-		Port<8> _operand2;
-		Port<8> _result;
+		Port<16> _operand1;
+		Port<16> _operand2;
+		Port<16> _result;
 
 		Port<4> _flags;
 		Port<4> _instruction;
@@ -83,5 +84,6 @@ class ALU
 		Adder _adder;
 
 		// Logic
+		Not _not;
 
 };

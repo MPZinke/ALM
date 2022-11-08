@@ -18,19 +18,19 @@ class Adder
 		Adder(ALU& alu);
 
 		Port<1>& carry_in();
-		Port<8> operator[](int index) const;  // Getter
-		Port<8>& operator[](int index);  // Setter
+		Port<16> operator[](int index) const;  // Getter
+		Port<16>& operator[](int index);  // Setter
 
 		friend std::ostream& operator<<(std::ostream& stream, Adder& adder);
-		friend void operator<<(Port<8>& port, Adder& adder);
+		friend void operator<<(Port<16>& port, Adder& adder);
 
 	private:
 		ALU& _alu;
 
 		Port<1> _carry_in;
-		Port<8> _operand1;
-		Port<8> _operand2;
-		Port<8> _result;
+		Port<16> _operand1;
+		Port<16> _operand2;
+		Port<16> _result;
 
 		void _add();
 };
