@@ -12,7 +12,6 @@
 
 
 #include "ALU.hpp"
-#include "Port.hpp"
 
 
 ALU::ALU()
@@ -22,27 +21,31 @@ ALU::ALU()
 
 void ALU::_decode()
 {
-	std::cout << _instruction << std::endl;
-	std::cout << SUB << std::endl;
-	if(_instruction == ADD)
+	switch((int)_instruction)
 	{
-		_flags[CARRY] >> _adder.carry_in();
-		_operand1 >> _adder[OPERAND1];
-		_operand2 >> _adder[OPERAND2];
-		_result << _adder;
-	}
-	if(_instruction == SUB)
-	{
-		// Two's compliment
-		_operand2 >> _not >> _adder[OPERAND1];
-		1 >> _adder[OPERAND2];
-		_operand2 << _adder;
-		std::cout << "Two's compliment:\n" << _operand2 << std::endl;
+		case(ADDC):
+		{
+			_flags[CARRY] >> _adder.carry_in();
+		}
+		case(ADD):
+		{
+			_operand1 >> _adder[OPERAND1];
+			_operand2 >> _adder[OPERAND2];
+			_result << _adder;
+			break;
+		}
+		case(SUB):
+		{
+			// Two's compliment
+			_operand2 >> _not >> _adder[OPERAND1];
+			1 >> _adder[OPERAND2];
+			_operand2 << _adder;
 
-		// Sub
-		_operand1 >> _adder[OPERAND1];
-		_operand2 >> _adder[OPERAND2];
-		_result << _adder;
+			_operand1 >> _adder[OPERAND1];
+			_operand2 >> _adder[OPERAND2];
+			_result << _adder;
+			break;
+		}
 	}
 }
 

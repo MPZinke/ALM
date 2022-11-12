@@ -44,6 +44,9 @@ class Port
 		template<size_t M>
 		friend bit operator^(bit left, Port<M>& port);
 
+		// Convert
+		explicit operator int();
+
 		// Data Flow
 		// Convert ports of different size
 		template<size_t M, size_t P>
@@ -97,12 +100,9 @@ bit Port<N>::operator[](int index) const
 template<size_t N>
 bool Port<N>::operator==(int right)
 {
-	std::cout << *this << "|" << right << std::endl;
 	for(int n = N; n > 0; n--)
 	{
-		std::cout << "\t" << _bits[n-1] << "==" << ((1 << (N-n)) & right) << std::endl;
 		if(_bits[n-1] != ((right >> (N-n)) & 1))
-		// if(_bits[x] != ((1 << x) & 1))
 		{
 			return false;
 		}
@@ -134,6 +134,21 @@ bit Port<N>::operator^(bit right)
 
 // ——————————————————————————————————————————————————— DATA  FLOW ——————————————————————————————————————————————————— //
 
+template<size_t N>
+Port<N>::operator int()
+{
+	int value = 0;
+	for(int x = 0; x < N; x++)
+	{
+		value |= (((int)_bits[x]) << ((N-1) - x));
+	}
+
+	return value;
+}
+
+
+// ——————————————————————————————————————————————————— DATA  FLOW ——————————————————————————————————————————————————— //
+
 template<size_t N, size_t M>
 Port<M>& operator>>(Port<N>& left, Port<M>& right)
 {
@@ -149,6 +164,11 @@ Port<M>& operator>>(Port<N>& left, Port<M>& right)
 template<size_t N>
 Port<N>& operator>>(bit left, Port<N>& right)
 {
+	for(int x = 0; x < N; x++)
+	{
+		right._bits[x] = 0;
+	}
+
 	right._bits[N-1] = left;
 	return right;
 }
