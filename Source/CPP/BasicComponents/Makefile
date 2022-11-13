@@ -1,29 +1,18 @@
-CXX=g++
-FLAGS=-std=c++17
-
-
-
-OBJECT_DIR=$(SOURCE_DIR)/../Objects
-
-HEADERS_DIR=$(SOURCE_DIR)/Headers
-CPP_DIR=$(SOURCE_DIR)/CPP
-
-HEADER_DIR=$(HEADERS_DIR)$(subst $(CPP_DIR),,$(CURDIR))
 
 
 all: Memory.o Port.o Register.o
 
 
 Memory.o: Port.o
-	@$(eval MEMORY_OBJ:=$(OBJECT_DIR)/Memory.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -c Memory.cpp -o $(MEMORY_OBJ)
+	@$(eval MEMORY_OBJ:=$(OBJECTS_DIR)/Memory.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c Memory.cpp -o $(MEMORY_OBJ)
 
 
 Port.o:
-	@$(eval PORT_OBJ:=$(OBJECT_DIR)/Port.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -c Port.cpp -o $(PORT_OBJ)
+	@$(eval PORT_OBJ:=$(OBJECTS_DIR)/Port.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c Port.cpp -o $(PORT_OBJ)
 
 
 Register.o: Port.o
-	@$(eval REGISTER_OBJ:=$(OBJECT_DIR)/Register.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -I$(ALU_HEADER_DIR) -c Register.cpp -o $(REGISTER_OBJ)
+	@$(eval REGISTER_OBJ:=$(OBJECTS_DIR)/Register.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c Register.cpp -o $(REGISTER_OBJ)

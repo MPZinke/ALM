@@ -88,6 +88,12 @@ Port<16>& ALU::operator[](int index)
 
 // ————————————————————————————————————————————————————— FRIEND ————————————————————————————————————————————————————— //
 
+void operator<<(Register& register_x, ALU& alu)
+{
+	register_x._port << alu;
+}
+
+
 std::ostream& operator<<(std::ostream& stream, ALU& alu)
 {
 	stream << alu._operand1[0]  << " " << alu._operand1[1]  << " " << alu._operand1[2]  << " "

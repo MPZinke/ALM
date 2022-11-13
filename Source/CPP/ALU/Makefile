@@ -1,25 +1,15 @@
-CXX=g++
-FLAGS=-std=c++17
-
-
-OBJECT_DIR=$(SOURCE_DIR)/../Objects
-
-HEADERS_DIR=$(SOURCE_DIR)/Headers
-CPP_DIR=$(SOURCE_DIR)/CPP
-
-HEADER_DIR=$(HEADERS_DIR)$(subst $(CPP_DIR),,$(CURDIR))
 
 
 Adder.o:
-	@$(eval ADDER_OBJ:=$(OBJECT_DIR)/Adder.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -I$(BASIC_COMPONENT_HEADER_DIR) -c Adder.cpp -o $(ADDER_OBJ)
+	@$(eval ADDER_OBJ:=$(OBJECTS_DIR)/Adder.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c Adder.cpp -o $(ADDER_OBJ)
 
 
-ALU.o:
-	@$(eval ALU_OBJ:=$(OBJECT_DIR)/ALU.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -I$(BASIC_COMPONENT_HEADER_DIR) -c ALU.cpp -o $(ALU_OBJ)
+ALU.o: Adder.o Not.o
+	@$(eval ALU_OBJ:=$(OBJECTS_DIR)/ALU.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c ALU.cpp -o $(ALU_OBJ)
 
 
 Not.o:
-	@$(eval NOT_OBJ:=$(OBJECT_DIR)/Not.o)
-	$(CXX) $(FLAGS) -I$(HEADER_DIR) -I$(BASIC_COMPONENT_HEADER_DIR) -c Not.cpp -o $(NOT_OBJ)
+	@$(eval NOT_OBJ:=$(OBJECTS_DIR)/Not.o)
+	$(CXX) $(FLAGS) $(INCLUDES) -c Not.cpp -o $(NOT_OBJ)

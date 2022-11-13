@@ -79,12 +79,6 @@ void operator>>(Register& register_x, Port<4>& port)
 }
 
 
-void operator<<(Register& register_x, ALU& alu)
-{
-	register_x._port << alu;
-}
-
-
 std::ostream& operator<<(std::ostream& stream, Register& register_x)
 {
 	stream << register_x._port[0]  << " " << register_x._port[1]  << " " << register_x._port[2]  << " "

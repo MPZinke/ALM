@@ -7,7 +7,9 @@
 
 
 #include "Port.hpp"
-#include "ALU.hpp"
+
+
+class ALU;
 
 
 class Register

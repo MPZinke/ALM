@@ -15,6 +15,8 @@
 
 
 #include "Port.hpp"
+#include "Register.hpp"
+
 #include "Adder.hpp"
 #include "Not.hpp"
 
