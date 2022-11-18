@@ -4,6 +4,7 @@
 
 
 #include "Port.hpp"
+#include "Register.hpp"
 
 
 class CPU;
@@ -14,8 +15,10 @@ class Controller
 	public:
 		Controller(CPU& cpu);
 
+		void operator++();
+
 
 	private:
 		CPU& _cpu;
-		Port<16> _instruction;
+		Register& _instruction;
 };

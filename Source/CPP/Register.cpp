@@ -52,7 +52,7 @@ Register::Register(	bool bit0,  bool bit1,  bool bit2,  bool bit3,  bool bit4,  
 
 // ————————————————————————————————————————————————————— FRIEND ————————————————————————————————————————————————————— //
 
-void operator>>(Register& register_x, Port<16>& port)
+Port<16>& operator>>(Register& register_x, Port<16>& port)
 {
 	port._bits[0]  = register_x._port._bits[0];
 	port._bits[1]  = register_x._port._bits[1];
@@ -70,12 +70,15 @@ void operator>>(Register& register_x, Port<16>& port)
 	port._bits[13] = register_x._port._bits[13];
 	port._bits[14] = register_x._port._bits[14];
 	port._bits[15] = register_x._port._bits[15];
+
+	return port;
 }
 
 
-void operator>>(Register& register_x, Port<4>& port)
+Port<4>& operator>>(Register& register_x, Port<4>& port)
 {
 	register_x._port >> port;
+	return port;
 }
 
 

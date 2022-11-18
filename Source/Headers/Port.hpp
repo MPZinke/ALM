@@ -52,8 +52,8 @@ class Port
 		template<size_t M, size_t P>
 		friend Port<P>& operator>>(Port<M>& left, Port<P>& right);
 
-		friend void operator>>(Register &register_x, Port<16>& port);
-		friend void operator>>(Register &register_x, Port<4>& port);  // TEMP
+		friend Port<16>& operator>>(Register &register_x, Port<16>& port);
+		friend Port<4>& operator>>(Register &register_x, Port<4>& port);  // TEMP
 		template<size_t M>
 		friend Port<M>& operator>>(bit left, Port<M>& port);
 		void operator<<(Port<N>& right);

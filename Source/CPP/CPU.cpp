@@ -17,3 +17,9 @@
 CPU::CPU()
 : _controller{*this}
 {}
+
+
+void CPU::operator++()
+{
+	instruction << _memory[_instruction_counter];
+}

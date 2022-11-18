@@ -5,11 +5,10 @@
 
 #include "ALU/ALU.hpp"
 #include "Controller.hpp"
+#include "Instructions.hpp"
+#include "Memory.hpp"
 #include "Port.hpp"
 #include "Register.hpp"
-
-
-typedef int Memory[256];
 
 
 class CPU
@@ -21,7 +20,7 @@ class CPU
 		void operator++();
 
 	private:
-		Memory _memory = {ADD, SUB};
+		Memory _memory;
 		Register _register0;
 		Register _register1;
 		Register _register2;
@@ -32,6 +31,7 @@ class CPU
 
 		ALU _alu;
 		Controller _controller;
+		int _program_counter = 0;
 
 		Port<16> _input_bus;
 		Port<16> _output_bus;
