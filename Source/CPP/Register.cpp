@@ -82,6 +82,27 @@ Port<4>& operator>>(Register& register_x, Port<4>& port)
 }
 
 
+void operator<<(Register& register_x, Port<16>& port)
+{
+	register_x._port._bits[0]  = port._bits[0];
+	register_x._port._bits[1]  = port._bits[1];
+	register_x._port._bits[2]  = port._bits[2];
+	register_x._port._bits[3]  = port._bits[3];
+	register_x._port._bits[4]  = port._bits[4];
+	register_x._port._bits[5]  = port._bits[5];
+	register_x._port._bits[6]  = port._bits[6];
+	register_x._port._bits[7]  = port._bits[7];
+	register_x._port._bits[8]  = port._bits[8];
+	register_x._port._bits[9]  = port._bits[9];
+	register_x._port._bits[10] = port._bits[10];
+	register_x._port._bits[11] = port._bits[11];
+	register_x._port._bits[12] = port._bits[12];
+	register_x._port._bits[13] = port._bits[13];
+	register_x._port._bits[14] = port._bits[14];
+	register_x._port._bits[15] = port._bits[15];
+}
+
+
 std::ostream& operator<<(std::ostream& stream, Register& register_x)
 {
 	stream << register_x._port[0]  << " " << register_x._port[1]  << " " << register_x._port[2]  << " "

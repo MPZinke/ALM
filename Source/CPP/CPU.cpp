@@ -15,11 +15,11 @@
 
 
 CPU::CPU()
-: _controller{*this}
+: _controller{_register0, _register1, _register2, _register3, _register4, _register5, _instruction}
 {}
 
 
 void CPU::operator++()
 {
-	instruction << _memory[_instruction_counter];
+	_instruction << _memory[_program_counter];
 }

@@ -7,7 +7,8 @@ Memory::Memory()
 {}
 
 
-Word Memory::operator[](int index)
+Port<16>& Memory::operator[](int index)
 {
-	return _words[index];
+	_output_bus << _words[index];
+	return _output_bus;
 }

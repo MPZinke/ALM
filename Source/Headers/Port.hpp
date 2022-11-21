@@ -51,12 +51,15 @@ class Port
 		// Convert ports of different size
 		template<size_t M, size_t P>
 		friend Port<P>& operator>>(Port<M>& left, Port<P>& right);
-
-		friend Port<16>& operator>>(Register &register_x, Port<16>& port);
-		friend Port<4>& operator>>(Register &register_x, Port<4>& port);  // TEMP
+		friend Port<16>& operator>>(Register& register_x, Port<16>& port);
+		friend Port<4>& operator>>(Register& register_x, Port<4>& port);  // TEMP
 		template<size_t M>
 		friend Port<M>& operator>>(bit left, Port<M>& port);
-		void operator<<(Port<N>& right);
+
+		template<size_t M, size_t P>
+		friend Port<M>& operator<<(Port<M>& left, Port<P>& right);
+		friend void operator<<(Register& left, Port<16>& right);
+		Port<N>& operator<<(int right);
 
 		// Printing
 		template<size_t M>
@@ -174,13 +177,27 @@ Port<N>& operator>>(bit left, Port<N>& right)
 }
 
 
-template<size_t N>
-void Port<N>::operator<<(Port<N>& right)
+template<size_t N, size_t M>
+Port<N>& operator<<(Port<N>& left, Port<M>& right)
 {
-	for(int x = 0; x < N; x++)
+	static_assert(N > 0 && M > 0);
+	for(int x = 0; x < (int)(N < M ? N : M); x++)
 	{
-		this->_bits[x] = right._bits[x];
+		left._bits[(M - 1) - x] = right._bits[(N - 1) - x];
 	}
+	return left;
+}
+
+
+template<size_t N>
+Port<N>& Port<N>::operator<<(int right)
+{
+	for(int x = N-1; x < N; x++)
+	{
+		_bits[x] = (right >> ((N-1) - x)) & 1;
+	}
+
+	return *this;
 }
 
 
