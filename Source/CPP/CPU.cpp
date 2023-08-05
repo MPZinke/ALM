@@ -15,7 +15,8 @@
 
 
 CPU::CPU()
-: _controller{_register0, _register1, _register2, _register3, _register4, _register5, _instruction}
+: _controller{_register0, _register1, _register2, _register3, _register4, _register5, _instruction},
+  _multiplexer{&_register0, &_register1, &_register2, &_register3, &_register4, &_register5}
 {}
 
 

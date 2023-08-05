@@ -21,6 +21,8 @@ class Register
   					bool bit8,  bool bit9,  bool bit10, bool bit11, bool bit12, bool bit13, bool bit14, bool bit15);
 
 
+		Port<16>& port();
+
 		friend Port<16>& operator>>(Register& register_x, Port<16>& port);
 		friend Port<4>& operator>>(Register& register_x, Port<4>& port);  //TEMP
 		friend void operator<<(Register& register_x, ALU& alu);

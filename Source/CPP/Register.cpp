@@ -50,6 +50,12 @@ Register::Register(	bool bit0,  bool bit1,  bool bit2,  bool bit3,  bool bit4,  
 }
 
 
+Port<16>& Register::port()
+{
+	return _port;
+}
+
+
 // ————————————————————————————————————————————————————— FRIEND ————————————————————————————————————————————————————— //
 
 Port<16>& operator>>(Register& register_x, Port<16>& port)

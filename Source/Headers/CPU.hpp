@@ -7,6 +7,7 @@
 #include "Controller.hpp"
 #include "Instructions.hpp"
 #include "Memory.hpp"
+#include "Multiplexer.hpp"
 #include "Port.hpp"
 #include "Register.hpp"
 
@@ -21,6 +22,7 @@ class CPU
 
 	private:
 		Memory _memory;
+		Multiplexer<6, Register*> _multiplexer;
 		Register _register0;
 		Register _register1;
 		Register _register2;
